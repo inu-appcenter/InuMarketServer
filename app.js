@@ -1,6 +1,14 @@
-const express = require('express');
+const express = require('express'),
+      path = require("path"),
+      login = require("./routes/login");
 
-var app = express();
+
+var app = express(),
+    router = express.Router();
+
+
+
+app.use("/login",login);
 
 app.use(function(req,res,next) {
     var err = new Error ("Not Found");
@@ -10,4 +18,4 @@ app.use(function(req,res,next) {
 
 app.get("/", (req,res) => res.send("Hello Express"));
 
-app.listen(3300, () => console.log("express listening on posrt 3300"));
+app.listen(7000, () => console.log("express listening on posrt 7000"));
