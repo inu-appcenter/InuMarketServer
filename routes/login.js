@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+router.get('/',function(req,res,next){
+    res.send("this is get");
+})
+
 router.post('/',function(req,res,next){
     if(req.query.id === null || req.query.id === undefined){
         res.send(false);
