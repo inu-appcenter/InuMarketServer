@@ -49,8 +49,8 @@ router.post('/',async (req,res) => {
             res.send(true);
         }
         else{
-            return false;
             res.send(false);
+            return false;
         }
     }catch(error) {
         res.send(false);
