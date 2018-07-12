@@ -50,6 +50,7 @@ router.post('/',async (req,res) => {
         }
         else{
             return false;
+            res.send(false);
         }
     }catch(error) {
         res.send(false);
