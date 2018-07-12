@@ -1,14 +1,38 @@
 const express = require('express'),
       path = require("path"),
-      login = require("./routes/login");
+      mongoose = require('mongoose'),
+      bodyParser =require('body-parser');
+
+var login = require("./routes/login"),
+    account = require('./routes/account');
 
 
 var app = express(),
     router = express.Router();
+var http = require('http').Server(app),
+    io = require('socket.io')(http);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
+
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/index.html');
+  });
 
 
+var db = mongoose.connection;
+db.on('error',console.error);
+db.once('open',function() {
+    console.log("db connect");
+});
+mongoose.connect('mongodb://localhost/INUM')
+
+io.on("connection", (socket) => {
+    console.log("socket is connect") 
+})
 
 app.use("/login",login);
+app.use('/account',account);
 
 app.use(function(req,res,next) {
     var err = new Error ("Not Found");
@@ -18,4 +42,4 @@ app.use(function(req,res,next) {
 
 app.get("/", (req,res) => res.send("Hello Express"));
 
-app.listen(7000, () => console.log("express listening on posrt 7000"));
+http.listen(7000, () => console.log("express listening on posrt 7000"));
