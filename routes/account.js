@@ -18,16 +18,14 @@ var checkId = async function(reqId) {
             
         }
     }).where("id").equals(reqId)
-    console.log(checkId);
     return checkId;
 }
 
 router.post('/',async (req,res) => {
     try{
-
-        console.log(req.query.id);
+        const nowDate = new Date();
+        console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
         var checkIdValue = await checkId(req.query.id)
-        console.log(checkIdValue);
         if(checkIdValue === 1 ) {
             var newAccount = new account();
             newAccount.name = req.query.name;
