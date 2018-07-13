@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 var account = require('../model/account');
+var checkId = require('./checkId');
 
-var checkId = async function(reqId) {
+/*var checkId = async function(reqId) {
     var checkId =0;
     await account.find({},function(err,ans){
         if(err) throw err;
@@ -19,7 +20,7 @@ var checkId = async function(reqId) {
         }
     }).where("id").equals(reqId)
     return checkId;
-}
+}*/
 
 router.post('/',async (req,res) => {
     try{
