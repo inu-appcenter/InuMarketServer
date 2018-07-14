@@ -30,7 +30,6 @@ router.post('/',async (req,res) => {
         if(checkIdValue === 1 ) {
             var newAccount = new account();
             newAccount.name = req.query.name;
-            newAccount.major = req.query.major;
             newAccount.id = req.query.id;
             newAccount.tel = req.query.tel;
             newAccount.passwd = req.query.passwd;
