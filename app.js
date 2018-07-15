@@ -1,10 +1,12 @@
 const express = require('express'),
       path = require("path"),
       mongoose = require('mongoose'),
-      bodyParser =require('body-parser');
+      bodyParser = require('body-parser'),
+      config = require('./routes/config/config');
 
 var login = require("./routes/login"),
-    account = require('./routes/account');
+    account = require('./routes/account'),
+    check = require('./routes/check');
 
 
 var app = express(),
@@ -14,6 +16,8 @@ var http = require('http').Server(app),
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
+
+app.set('jwt-secret', config.secret)
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
@@ -33,6 +37,7 @@ io.on("connection", (socket) => {
 
 app.use("/login",login);
 app.use('/account',account);
+app.use('/check',check);
 
 app.use(function(req,res,next) {
     var err = new Error ("Not Found");

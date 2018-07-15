@@ -1,4 +1,4 @@
-var account = require('./model/account');
+var account = require('../model/account');
 
 module.exports = async function(reqId) {
     var checkId =0;

@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-var account = require('../model/account');
-var checkId = require('./checkId');
+var account = require('./model/account');
+var checkId = require('./function/checkId');
+const crypto = require('crypto')
+const config = require('./config/config')
 
 /*var checkId = async function(reqId) {
     var checkId =0;
@@ -28,11 +30,15 @@ router.post('/',async (req,res) => {
         console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
         var checkIdValue = await checkId(req.query.id)
         if(checkIdValue === 1 ) {
+            let passwd = req.query.passwd
+            const encrypted = crypto.createHmac('sha1', config.secret)
+                                .update(passwd)
+                                .digest('base64')
             var newAccount = new account();
             newAccount.name = req.query.name;
             newAccount.id = req.query.id;
             newAccount.tel = req.query.tel;
-            newAccount.passwd = req.query.passwd;
+            newAccount.passwd = encrypted;
             newAccount.certification = false;
             newAccount.userState = true;
              
