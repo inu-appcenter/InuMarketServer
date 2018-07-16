@@ -9,8 +9,7 @@ router.post('/',function(req,res,net){
     const secret = req.app.get('jwt-secret')
     const check = (id) => {
         if(!id) {
-            console.log("here")
-            throw new Error('login failed')
+            throw new Error('login failed : wrong id')
         }else {
             if(id.verify(passwd)) {
                 const p = new Promise((resolve,reject) => {
@@ -32,7 +31,7 @@ router.post('/',function(req,res,net){
                 console.log(p)
                 return p 
             } else {
-                throw new Error ('login failed')
+                throw new Error ('login failed : wrong password')
             }
         }
     }
