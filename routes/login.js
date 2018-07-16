@@ -9,7 +9,9 @@ router.post('/',function(req,res,net){
     const secret = req.app.get('jwt-secret')
     const check = (id) => {
         if(!id) {
-            throw new Error('login failed : wrong id')
+            console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
+            console.log("worng id")
+            throw new Error('login failed')
         }else {
             if(id.verify(passwd)) {
                 const p = new Promise((resolve,reject) => {
@@ -28,9 +30,12 @@ router.post('/',function(req,res,net){
                         }
                     )
                 })
-                console.log(p)
+                console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
+                console.log("login success!")
                 return p 
             } else {
+                console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
+                console.log("wrong password");
                 throw new Error ('login failed : wrong password')
             }
         }
