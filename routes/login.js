@@ -5,7 +5,8 @@ const account = require('./model/account')
 
 const nowDate = new Date();
 router.post('/',function(req,res,net){
-    const {id,passwd} = req.query
+    console.log(req.body);
+    const {id,passwd} = req.body
     const secret = req.app.get('jwt-secret')
     const check = (id) => {
         if(!id) {

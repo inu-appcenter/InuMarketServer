@@ -28,16 +28,16 @@ router.post('/',async (req,res) => {
     try{
         const nowDate = new Date();
         console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
-        var checkIdValue = await checkId(req.query.id)
+        var checkIdValue = await checkId(req.body.id)
         if(checkIdValue === 1 ) {
-            let passwd = req.query.passwd
+            let passwd = req.body.passwd
             const encrypted = crypto.createHmac('sha1', config.secret)
                                 .update(passwd)
                                 .digest('base64')
             var newAccount = new account();
-            newAccount.name = req.query.name;
-            newAccount.id = req.query.id;
-            newAccount.tel = req.query.tel;
+            newAccount.name = req.body.name;
+            newAccount.id = req.body.id;
+            newAccount.tel = req.body.tel;
             newAccount.passwd = encrypted;
             newAccount.certification = false;
             newAccount.userState = true;
