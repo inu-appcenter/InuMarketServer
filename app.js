@@ -6,7 +6,10 @@ const express = require('express'),
 
 var login = require("./routes/login"),
     account = require('./routes/account'),
-    check = require('./routes/check');
+    check = require('./routes/check'),
+    imgUpload = require('./routes/imgUpload'),
+    test = require('./routes/test'),
+    productUpload = require('./routes/productUpload');
 
 
 var app = express(),
@@ -38,6 +41,11 @@ io.on("connection", (socket) => {
 app.use("/login",login);
 app.use('/account',account);
 app.use('/check',check);
+app.use('/imgUpload',imgUpload)
+app.use('/imgload',express.static('image'))
+app.use('/test',test)
+app.use('/Pupload',productUpload)
+
 
 app.use(function(req,res,next) {
     var err = new Error ("Not Found");
