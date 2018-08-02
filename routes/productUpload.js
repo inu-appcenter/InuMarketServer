@@ -10,8 +10,13 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({storage: storage})
+const authMiddleware = require('./function/auth')
+
 
 var product = require('./model/product')
+
+
+router.use('/', authMiddleware)
 
 router.post('/',upload.array('userfile',8), async (req,res) => {
     console.log(req.files)

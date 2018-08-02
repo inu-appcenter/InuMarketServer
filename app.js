@@ -9,7 +9,8 @@ var login = require("./routes/login"),
     check = require('./routes/check'),
     imgUpload = require('./routes/imgUpload'),
     test = require('./routes/test'),
-    productUpload = require('./routes/productUpload');
+    productUpload = require('./routes/productUpload'),
+    productSelect = require('./routes/productSelect')
 
 
 var app = express(),
@@ -45,6 +46,7 @@ app.use('/imgUpload',imgUpload)
 app.use('/imgload',express.static('image'))
 app.use('/test',test)
 app.use('/Pupload',productUpload)
+app.use('/PSelect',productSelect)
 
 
 app.use(function(req,res,next) {
