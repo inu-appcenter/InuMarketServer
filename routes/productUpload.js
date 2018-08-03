@@ -37,13 +37,13 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     await newProduct.save(function(err) {
         if(err){
             console.error(err);
-            res.send(false)
+            res.json({ans : false})
             return;
         }
         console.log("입력완료")
         return;
     })
-    res.send(true); 
+    res.json({ans : true}); 
 
 })
 
