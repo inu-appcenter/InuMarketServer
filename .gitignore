@@ -5,3 +5,5 @@ important
 .env
 .DS_Store
 *.log
+image
+upload

@@ -50,14 +50,14 @@ router.post('/',async (req,res) => {
                 console.log(newAccount.name +"회원가입성공")
                 return;
             })
-            res.send(true);
+            res.json({ans : true });
         }
         else{
-            res.send(false);
+            res.json({ans : false});
             return false;
         }
     }catch(error) {
-        res.send(false);
+        res.json({ans : false});
         console.log(error);
     }
 })
