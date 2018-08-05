@@ -25,6 +25,7 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     newProduct.productName = req.body.productName;
     newProduct.productState = req.body.productState;
     newProduct.productPrice = req.body.productPrice;
+    newProduct.productStar = 0;
     newProduct.category = req.body.category;
     newProduct.productInfo = req.body.productInfo;
     newProduct.method = req.body.method;
