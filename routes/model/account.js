@@ -5,8 +5,8 @@ const config = require('../config/config')
 
 var accountSchema = new Schema({
     name : String,
-    id : Number,
-    tel : Number,
+    id : String,
+    tel : String,
     passwd : String,
     letterNum : {
     },
