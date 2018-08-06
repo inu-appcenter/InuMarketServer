@@ -4,6 +4,7 @@ var account = require('./model/account');
 var checkId = require('./function/checkId');
 const crypto = require('crypto')
 const config = require('./config/config')
+const sendVerifiMail = require('./function/sendEmail')
 
 /*var checkId = async function(reqId) {
     var checkId =0;
@@ -42,11 +43,13 @@ router.post('/',async (req,res) => {
             newAccount.certification = false;
             newAccount.userState = true;
              
-            await newAccount.save(function(err) {
+            await newAccount.save(async function(err,docs) {
                 if(err) {
                     console.error(err);
                     return;
                 }
+                console.log(docs)
+                await sendVerifiMail(docs.id+"@inu.ac.kr",docs.accountId)
                 console.log(newAccount.name +"회원가입성공")
                 return;
             })

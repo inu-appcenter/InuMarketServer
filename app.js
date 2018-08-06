@@ -2,7 +2,7 @@ const express = require('express'),
       path = require("path"),
       mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
-      config = require('./routes/config/config');
+      config = require('./routes/config/config')
 
 var login = require("./routes/login"),
     account = require('./routes/account'),
@@ -10,7 +10,8 @@ var login = require("./routes/login"),
     imgUpload = require('./routes/imgUpload'),
     test = require('./routes/test'),
     productUpload = require('./routes/productUpload'),
-    productSelect = require('./routes/productSelect')
+    productSelect = require('./routes/productSelect'),
+    verified = require('./routes/verified')
 
 
 var app = express(),
@@ -47,6 +48,7 @@ app.use('/imgload',express.static('image'))
 app.use('/test',test)
 app.use('/Pupload',productUpload)
 app.use('/PSelect',productSelect)
+app.use('/verified',verified)
 
 
 app.use(function(req,res,next) {
