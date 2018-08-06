@@ -5,49 +5,61 @@ const account = require('./model/account')
 
 const nowDate = new Date();
 router.post('/',function(req,res,net){
-    console.log(req.body);
     const {id,passwd} = req.body
     const secret = req.app.get('jwt-secret')
     const check = (id) => {
         if(!id) {
             console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
             console.log("worng id")
-            throw new Error('login failed')
+            throw new Error('fail')
         }else {
             if(id.verify(passwd)) {
-                const p = new Promise((resolve,reject) => {
-                    jwt.sign(
-                        {
-                            _id:id._id,
-                            id: id.id,
-                        },
-                        secret,
-                        {
-                            expiresIn: '7d',
-                            subject: 'userInfo'
-                        }, (err, token) => {
-                            if(err) reject(err)
-                            resolve(token)
-                        }
-                    )
-                })
-                console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
-                console.log("login success!")
-                return p 
+                if(id.certification === true){
+                    const p = new Promise((resolve,reject) => {
+                        jwt.sign(
+                            {
+                                _id:id._id,
+                                id: id.id,
+                            },
+                            secret,
+                            {
+                                expiresIn: '7d',
+                                subject: 'userInfo'
+                            }, (err, token) => {
+                                if(err) reject(err)
+                                resolve(token)
+                            }
+                        )
+                    })
+                    console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
+                    console.log(id.id+"님 login success!")
+                    return p 
+                }
+                else{
+                    throw new Error('certification')
+                }
+                
             } else {
                 console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
                 console.log("wrong password");
-                throw new Error ('login failed : wrong password')
+                throw new Error ('fail')
             }
         }
     }
 
     //respond the token
-    const respond = (token) => {
-        res.json({
-            message : 'logged in success',
-            token
+    const respond = async (token) => {
+        await account.find({"id":id}).exec(function(err,docs){
+            if(err) console.error(err)
+            res.json({
+                message : 'logged in success',
+                token,
+                id:docs[0].id,
+                name:docs[0].name,
+                tel : docs[0].tel
+            })
         })
+        
     }
 
     const onError = (error) => {

@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const crypto = require('crypto')
 const config = require('../config/config')
+const shortid = require('shortid')
 
 var accountSchema = new Schema({
     name : String,
@@ -16,6 +17,11 @@ var accountSchema = new Schema({
     userState : Number,
     session : String,
     autoLogin : Boolean,
+    accountId : {
+        type : String,
+        unique : true,        
+        default: shortid.generate
+},
     FCM : String
 });
 

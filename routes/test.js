@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 var product = require('./model/product')
+const send = require('./function/sendEmail')
 
 
 router.post('/',async (req,res)=>{
-    console.log(req.body)
+    /*console.log(req.body)
     const nowDate = new Date();
 
     var newProduct = new product();
@@ -26,7 +27,10 @@ router.post('/',async (req,res)=>{
         console.log("입력완료")
         return;
     })
-    res.send(true);
+    res.send(true);*/
+
+    send("limson222@gmail.com","fjfj")
+    res.send(true)
 })
 
 module.exports = router
