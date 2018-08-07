@@ -8,6 +8,7 @@ var productSchema = new Schema({
     productStar : Number,
     productInfo : String,
     productState : String,
+    productSelled : false,
     method : String,
     place : String,
     category : String,

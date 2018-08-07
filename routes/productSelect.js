@@ -3,7 +3,7 @@ const router = express.Router()
 const product = require('./model/product')
 const authMiddleware = require('./function/auth')
 
-router.use('/',authMiddleware)
+//router.use('/',authMiddleware)
 
 router.post('/main',async(req,res)=> {
     await product.find({},
@@ -49,6 +49,46 @@ router.post('/search',async (req,res)=> {
         "category":false,
         "sellerId":false,
     }).exec(function(err,docs){
+        if(err){
+            throw(err)
+        }
+        else{
+            res.send(docs)
+        }
+    })
+})
+
+router.post('/selled',async (req,res)=>{
+    const seller = req.body.sellerId
+    await product.find({"sellerId":seller,"productSelled":true},{
+        "_id":false,
+        "productStar":false,
+        "productInfo":false,
+        "productState":false,
+        "method":false,
+        "place":false,
+        "category":false,
+    }).sort({updateDate:"desc"}).exec((err,docs)=>{
+        if(err){
+            throw(err)
+        }
+        else{
+            res.send(docs)
+        }
+    })
+})
+
+router.post('/nonsell',async (req,res)=>{
+    const seller = req.body.sellerId
+    await product.find({"sellerId":seller,"productSelled":false},{
+        "_id":false,
+        "productStar":false,
+        "productInfo":false,
+        "productState":false,
+        "method":false,
+        "place":false,
+        "category":false,
+    }).sort({updateDate:"desc"}).exec((err,docs)=>{
         if(err){
             throw(err)
         }
