@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 var product = require('./model/product')
-const send = require('./function/sendEmail')
+const send = require('./config/sendEmail')
 
 
 router.post('/',async (req,res)=>{
