@@ -4,7 +4,7 @@ var account = require('./model/account');
 var checkId = require('./function/checkId');
 const crypto = require('crypto')
 const config = require('./config/config')
-const sendVerifiMail = require('./function/sendEmail')
+const sendVerifiMail = require('./config/sendEmail')
 
 /*var checkId = async function(reqId) {
     var checkId =0;
