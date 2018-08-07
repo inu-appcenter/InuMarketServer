@@ -98,4 +98,24 @@ router.post('/nonsell',async (req,res)=>{
     })
 })
 
+router.post('/searchId',async (req,res)=>{
+    const seller = req.body.sellerId
+    await product.find({"sellerId":seller},{
+        "_id":false,
+        "productStar":false,
+        "productInfo":false,
+        "productState":false,
+        "method":false,
+        "place":false,
+        "category":false,
+    }).sort({updateDate:"desc"}).exec((err,docs)=>{
+        if(err){
+            throw(err)
+        }
+        else{
+            res.send(docs)
+        }
+    }) 
+})
+
 module.exports = router

@@ -11,7 +11,8 @@ var login = require("./routes/login"),
     test = require('./routes/test'),
     productUpload = require('./routes/productUpload'),
     productSelect = require('./routes/productSelect'),
-    verified = require('./routes/verified')
+    verified = require('./routes/verified'),
+    letter = require('./routes/letter')
 
 
 var app = express(),
@@ -49,6 +50,7 @@ app.use('/test',test)
 app.use('/Pupload',productUpload)
 app.use('/PSelect',productSelect)
 app.use('/verified',verified)
+app.use('/letter',letter)
 
 
 app.use(function(req,res,next) {

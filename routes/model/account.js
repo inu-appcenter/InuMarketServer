@@ -9,10 +9,8 @@ var accountSchema = new Schema({
     id : String,
     tel : String,
     passwd : String,
-    letterNum : {
-    },
-    myProductNum : {
-    },
+    letterNum : [],
+    myProductNum : [],
     certification : Boolean,
     userState : Number,
     session : String,

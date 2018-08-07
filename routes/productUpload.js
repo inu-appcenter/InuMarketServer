@@ -14,6 +14,7 @@ const authMiddleware = require('./function/auth')
 
 
 var product = require('./model/product')
+let account = require('./model/account')
 
 
 router.use('/', authMiddleware)
@@ -36,13 +37,16 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     await req.files.map(Data => 
         newProduct.productImg.push(Data.filename)   
     )
-    await newProduct.save(function(err) {
+    await newProduct.save(async function(err,docs) {
         if(err){
             console.error(err);
             res.json({ans : false})
             return;
         }
-        console.log("입력완료")
+        await account.update({"id":docs.sellerId},
+        {$push:{myProductNum:docs.productId}},
+        {upsert:true})
+        console.log(docs.sellerId+"님의"+docs.productId+"물건 입력완료"+docs.updateDate)
         return;
     })
     res.json({ans : true}); 
