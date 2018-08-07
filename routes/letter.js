@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const letter = require('./model/letter')
+const account = require('./model/account')
 
 router.post('/send',async (req,res)=>{
     const sellerLetter = new letter() //판매자에게 가는 쪽지
@@ -20,23 +21,29 @@ router.post('/send',async (req,res)=>{
     customerLetter.productId = req.body.productId
     customerLetter.productName = req.body.productName
 
-    await sellerLetter.save(async (err)=>{
+    await sellerLetter.save(async (err,docs)=>{
         if(err){
             console.log(err);
             throw err
         }
         else{
+            await account.update({"id":docs.sendId},
+            {$push:{letterNum:docs.letterId}},
+            {upsert:true})
             console.log("to"+req.body.sellerId+"from"+req.body.custId)
         }
 
 
     })
-    await customerLetter.save(async(err)=>{
+    await customerLetter.save(async(err,docs)=>{
         if(err){
             console.log(err)
             throw err
         }
         else{
+            await account.update({"id":docs.sendId},
+            {$push:{letterNum:docs.letterId}},
+            {upsert:true})
             console.log("to"+req.body.custId+"from"+req.body.sellerId)
         }
     })
