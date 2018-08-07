@@ -48,7 +48,6 @@ router.post('/',async (req,res) => {
                     console.error(err);
                     return;
                 }
-                console.log(docs)
                 await sendVerifiMail(docs.id+"@inu.ac.kr",docs.accountId)
                 console.log(newAccount.name +"회원가입성공")
                 return;
