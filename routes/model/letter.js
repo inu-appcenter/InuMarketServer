@@ -9,6 +9,7 @@ const letterSchema = new Schema({
     letterRead : Boolean,
     productId : String,
     productName : String,
+    senderPhone : String,
     letterId : {
         type : String,
         unique : true,        
