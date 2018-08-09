@@ -54,7 +54,8 @@ router.post('/changePasswd',async (req,res)=>{
             res.json({ans:"err"})
         }
         else{
-            if(docs.passwd != pastPasswd){
+            console.log(docs[0].passwd)
+            if(docs[0].passwd != pastPasswd){
                 res.json({ans:"fail"})
             }
             else{
