@@ -14,7 +14,8 @@ const letterSchema = new Schema({
         type : String,
         unique : true,        
         default: shortid.generate
-}
+    },
+    sendDate : Date
 })
 
 module.exports = mongoose.model('Lform',letterSchema)

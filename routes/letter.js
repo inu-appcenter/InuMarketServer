@@ -6,7 +6,7 @@ const account = require('./model/account')
 router.post('/send',async (req,res)=>{
     const sellerLetter = new letter() //판매자에게 가는 쪽지
     const customerLetter = new letter() //구매자에게 가는 쪽지
-
+    const nowDate = new Date()
 
     sellerLetter.sendId = req.body.custId
     sellerLetter.reciveId = req.body.sellerId
@@ -14,6 +14,7 @@ router.post('/send',async (req,res)=>{
     sellerLetter.letterRead = false
     sellerLetter.productId = req.body.productId
     sellerLetter.productName = req.body.productName
+    sellerLetter.sendDate = nowDate
     
     customerLetter.sendId = req.body.sellerId
     customerLetter.reciveId = req.body.custId
@@ -21,6 +22,7 @@ router.post('/send',async (req,res)=>{
     customerLetter.letterRead = false
     customerLetter.productId = req.body.productId
     customerLetter.productName = req.body.productName
+    customerLetter.sendDate = nowDate
 
     await account.find({"id":req.body.custId}).exec(
         async (err,docs)=>{
@@ -68,6 +70,18 @@ router.post('/send',async (req,res)=>{
     
     res.json({ans:true})
 
+})
+
+router.post('/list',async (req,res)=>{
+    letter.find({"reciveId":req.body.id}).sort({sendDate:"desc"}).exec((err,docs)=>{
+        if(err){
+            throw err
+            res.json({ans:"false"})
+        }
+        else{
+            res.send(docs)
+        }
+    })
 })
 
 module.exports = router
