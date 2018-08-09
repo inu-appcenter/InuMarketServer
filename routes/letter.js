@@ -84,4 +84,28 @@ router.post('/list',async (req,res)=>{
     })
 })
 
+router.post('/buyList',async (req,res)=>{
+    letter.find({"reciveId":req.body.id,"sellBuy":false}).sort({sendDate:"desc"}).exec((err,docs)=>{
+        if(err){
+            throw err
+            res.json({ans:"false"})
+        }
+        else{
+            res.send(docs)
+        }
+    })
+})
+
+router.post('/sellList',async (req,res)=>{
+    letter.find({"reciveId":req.body.id,"sellBuy":true }).sort({sendDate:"desc"}).exec((err,docs)=>{
+        if(err){
+            throw err
+            res.json({ans:"false"})
+        }
+        else{
+            res.send(docs)
+        }
+    })
+})
+
 module.exports = router
