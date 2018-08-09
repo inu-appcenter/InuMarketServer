@@ -118,4 +118,25 @@ router.post('/searchId',async (req,res)=>{
     }) 
 })
 
+router.post('/category',async (req,res)=>{
+    await product.find({"category":{$regex:req.body.category,$options:'i'}},{
+        "_id":false,
+        "productStar":false,
+        "productInfo":false,
+        "productState":false,
+        "method":false,
+        "place":false,
+        "category":false,
+    }).sort({updateDate:"desc"}).exec((err,docs)=>{
+        if(err){
+            throw(err)
+            res.send({ans:"err"})
+        }
+        else{
+            res.send(docs)
+        }
+    })
+})
+
+
 module.exports = router
