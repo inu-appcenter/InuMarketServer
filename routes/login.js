@@ -51,7 +51,6 @@ router.post('/',function(req,res,net){
     const respond = async (token) => {
         await account.find({"id":id}).exec(function(err,docs){
             if(err) console.error(err)
-            console.log(docs[0])
             res.json({
                 message : 'logged in success',
                 token,

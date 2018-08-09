@@ -14,7 +14,6 @@ router.post('/main',async(req,res)=> {
             "productState":false,
             "method":false,
             "place":false,
-            "category":false,
             "sellerId":false,
         }).sort({updateDate:'desc'}).exec(function(err,docs){
         if(err){
@@ -46,7 +45,6 @@ router.post('/search',async (req,res)=> {
         "productState":false,
         "method":false,
         "place":false,
-        "category":false,
         "sellerId":false,
     }).exec(function(err,docs){
         if(err){
@@ -67,7 +65,6 @@ router.post('/selled',async (req,res)=>{
         "productState":false,
         "method":false,
         "place":false,
-        "category":false,
     }).sort({updateDate:"desc"}).exec((err,docs)=>{
         if(err){
             throw(err)
@@ -87,7 +84,6 @@ router.post('/nonsell',async (req,res)=>{
         "productState":false,
         "method":false,
         "place":false,
-        "category":false,
     }).sort({updateDate:"desc"}).exec((err,docs)=>{
         if(err){
             throw(err)
@@ -107,7 +103,6 @@ router.post('/searchId',async (req,res)=>{
         "productState":false,
         "method":false,
         "place":false,
-        "category":false,
     }).sort({updateDate:"desc"}).exec((err,docs)=>{
         if(err){
             throw(err)
@@ -126,7 +121,6 @@ router.post('/category',async (req,res)=>{
         "productState":false,
         "method":false,
         "place":false,
-        "category":false,
     }).sort({updateDate:"desc"}).exec((err,docs)=>{
         if(err){
             throw(err)

@@ -34,7 +34,6 @@ router.post('/newPassword',async (req,res)=>{
             res.json({ans:false})
         }
         else{
-            console.log(docs)
             if(docs.n != 1){
                 res.json({ans:false})
             }
@@ -61,7 +60,6 @@ router.post('/changePasswd',async (req,res)=>{
             res.json({ans:"err"})
         }
         else{
-            console.log(docs[0].passwd)
             if(docs[0].passwd != pastPasswd){
                 res.json({ans:false})
             }
