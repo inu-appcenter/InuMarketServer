@@ -24,7 +24,7 @@ router.post('/product',async (req,res) => {
 })
 
 router.post('/password',async (req,res)=>{
-    const newPasswd = randomstring.generate()
+    const newPasswd = randomstring.generate(7)
     const encrypted = crypto.createHmac('sha1', config.secret)
                                 .update(newPasswd)
                                 .digest('base64')
