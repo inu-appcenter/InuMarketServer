@@ -34,7 +34,7 @@ router.post('/password',async (req,res)=>{
             res.json({ans:"fail"})
         }
         else{
-            await mailing(docs.id+"@inu.ac.kr",newPasswd,"passwd")
+            await mailing(req.body.id+"@inu.ac.kr",newPasswd,"passwd")
             res.json({ans:"success"})
         }
     })
