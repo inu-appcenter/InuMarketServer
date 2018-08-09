@@ -15,10 +15,10 @@ router.post('/product',async (req,res) => {
     ).exec((err)=>{
         if(err){
             throw err
-            res.json({ans:"false"})
+            res.json({ans:false})
         }
         else{
-            res.json({ans:"true"})
+            res.json({ans:true})
         }
     })
 })
@@ -31,16 +31,16 @@ router.post('/newPassword',async (req,res)=>{
     await account.update({"id":req.body.id,"name":req.body.name},{$set:{passwd:encrypted}}).exec(async (err,docs)=>{
         if(err){
             throw err
-            res.json({ans:"false"})
+            res.json({ans:false})
         }
         else{
             console.log(docs)
             if(docs.n != 1){
-                res.json({ans:"false"})
+                res.json({ans:false})
             }
             else{
                 await mailing(req.body.id+"@inu.ac.kr",newPasswd,"passwd")
-                res.json({ans:"true"})
+                res.json({ans:true})
             }
             
         }
@@ -63,7 +63,7 @@ router.post('/changePasswd',async (req,res)=>{
         else{
             console.log(docs[0].passwd)
             if(docs[0].passwd != pastPasswd){
-                res.json({ans:"false"})
+                res.json({ans:false})
             }
             else{
                 await account.update({"id":req.body.id},{$set:{passwd : newPasswd}}).exec((err)=>{
@@ -72,7 +72,7 @@ router.post('/changePasswd',async (req,res)=>{
                         res.json({ans:"err"})
                     }
                     else{
-                        res.json({ans:"true"})
+                        res.json({ans:true})
                     }
                 })
             }
