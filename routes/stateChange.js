@@ -23,7 +23,7 @@ router.post('/product',async (req,res) => {
     })
 })
 
-router.post('/password',async (req,res)=>{
+router.post('/newPassword',async (req,res)=>{
     const newPasswd = randomstring.generate(7)
     const encrypted = crypto.createHmac('sha1', config.secret)
                                 .update(newPasswd)
@@ -40,5 +40,36 @@ router.post('/password',async (req,res)=>{
     })
 })
 
+router.post('/changePasswd',async (req,res)=>{
+    const pastPasswd = crypto.createHmac('sha1',config.secret)
+                                .update(req.body.pastPasswd)
+                                .digest('base64')
+    
+    const newPasswd = crypto.createHmac('sha1',config.secret)
+                                .update(req.body.newPasswd)
+                                .digest('base64')
+    account.find({"id":req.body.id}).exec(async (err,docs)=>{
+        if(err){
+            throw err
+            res.json({ans:"err"})
+        }
+        else{
+            if(docs.passwd != pastPasswd){
+                res.json({ans:"fail"})
+            }
+            else{
+                await account.update({"id":req.body.id},{$set:{passwd : newPasswd}}).exec((err)=>{
+                    if(err){
+                        throw err
+                        res.json({ans:"err"})
+                    }
+                    else{
+                        res.json({ans:"success"})
+                    }
+                })
+            }
+        }
+    })
+})
 
 module.exports = router
