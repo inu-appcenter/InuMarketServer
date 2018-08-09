@@ -11,7 +11,7 @@ router.post('/',function(req,res,net){
         if(!id) {
             console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
             console.log("worng id")
-            throw new Error('fail')
+            throw new Error('flase')
         }else {
             if(id.verify(passwd)) {
                 if(id.certification === true){
@@ -42,7 +42,7 @@ router.post('/',function(req,res,net){
             } else {
                 console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
                 console.log("wrong password");
-                throw new Error ('fail')
+                throw new Error ('false')
             }
         }
     }
@@ -51,12 +51,15 @@ router.post('/',function(req,res,net){
     const respond = async (token) => {
         await account.find({"id":id}).exec(function(err,docs){
             if(err) console.error(err)
+            console.log(docs[0])
             res.json({
                 message : 'logged in success',
                 token,
                 id:docs[0].id,
                 name:docs[0].name,
-                tel : docs[0].tel
+                tel : docs[0].tel,
+                letter : docs[0].letterNum.length,
+                product : docs[0].myProductNum.length
             })
         })
         
