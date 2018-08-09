@@ -34,8 +34,15 @@ router.post('/newPassword',async (req,res)=>{
             res.json({ans:"fail"})
         }
         else{
-            await mailing(req.body.id+"@inu.ac.kr",newPasswd,"passwd")
-            res.json({ans:"success"})
+            console.log(docs)
+            if(docs.n != 1){
+                res.json({ans:"fail"})
+            }
+            else{
+                await mailing(req.body.id+"@inu.ac.kr",newPasswd,"passwd")
+                res.json({ans:"success"})
+            }
+            
         }
     })
 })
