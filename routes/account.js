@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 var account = require('./model/account');
+const letter = require('./model/letter')
+const product = require('./model/product')
+
 var checkId = require('./function/checkId');
 const crypto = require('crypto')
 const config = require('./config/config')
@@ -62,6 +65,41 @@ router.post('/',async (req,res) => {
         res.json({ans : false});
         console.log(error);
     }
+})
+
+router.post('/delete',async (req,res)=>{
+    account.find({"id":req.body.id}).exec(async(err,docs)=>{
+        if(err) res.json({ans:false})
+        else{
+           await docs[0].letterNum.map(Data => letter.remove({"letterId":Data}).exec(async (err)=>{
+               if(err) res.json({ans:false})
+               else{
+                   console.log("success to remove "+Data)
+                   await account.update({"id":req.body.id},{$pull:{letterNum:Data}}).exec( (err)=>{
+                       if(err) res.json({ans:false})
+                       console.log("pop the letter in id " + req.body.id)
+                   })
+               }
+           }))
+
+           await docs[0].myProductNum.map(Data => product.remove({"productId":Data}).exec(async (err)=>{
+                if(err) res.json({ans:false})
+                else{
+                    console.log("success to remove "+Data)
+                    await account.update({"id":req.body.id},{$pull:{myProductNum:Data}}).exec( (err)=>{
+                        if(err) res.json({ans:false})
+                        console.log("pop the letter in id " + req.body.id)
+                    })
+                }
+            }))
+            await account.remove({"id":req.body.id}).exec((err)=>{
+                if(err) res.json({ans:false})
+                else{
+                    res.json({ans:true})
+                }
+            })
+        }
+    })
 })
 
 module.exports = router;

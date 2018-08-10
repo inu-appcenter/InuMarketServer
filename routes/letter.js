@@ -108,4 +108,21 @@ router.post('/sellList',async (req,res)=>{
     })
 })
 
+router.post('/delete',async (req,res)=>{
+    await letter.remove({"letterId":req.body.letterId}).exec((err)=>{
+        if(err){
+            res.json({ans:false})
+        }
+    })
+
+    await account.update({"id":req.body.id},{$pull:{letterNum:req.body.letterId}}).exec((err)=>{
+        if(err){
+            res.json({ans:false})
+        }
+        else{
+            res.json({ans:true})
+        }
+    })
+})
+
 module.exports = router
