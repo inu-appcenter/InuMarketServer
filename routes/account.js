@@ -69,7 +69,7 @@ router.post('/',async (req,res) => {
 
 router.post('/delete',async (req,res)=>{
     account.find({"id":req.body.id}).exec(async(err,docs)=>{
-        if(err) res.json({ans:false})
+        if(err || docs[0]==undefined || docs[0]==[]) res.json({ans:false})
         else{
             const encrypted = crypto.createHmac('sha1', config.secret)
                                 .update(req.body.passwd)
