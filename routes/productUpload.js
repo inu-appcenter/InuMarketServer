@@ -17,7 +17,7 @@ var product = require('./model/product')
 let account = require('./model/account')
 
 
-router.use('/', authMiddleware)
+//router.use('/', authMiddleware)
 
 router.post('/',upload.array('userfile',8), async (req,res) => {
 
@@ -31,18 +31,18 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     newProduct.productInfo = req.body.productInfo;
     newProduct.method = req.body.method;
     newProduct.place = req.body.place;
-    newProduct.sellerId = req.decoded.id;
-    //newProduct.sellerId = req.body.id;
+    //newProduct.sellerId = req.decoded.id;
+    newProduct.sellerId = req.body.id;
 
     newProduct.productSelled = false
     newProduct.updateDate = nowDate;
-    console.log(req.decoded)
+    //console.log(req.decoded)
     console.log(req.body)
     console.log(req.files)
     let consoleArray = []
     await consoleArray.push(req.body)
     await consoleArray.push(req.files)
-    /*await req.files.map(Data => 
+    await req.files.map(Data => 
         newProduct.productImg.push(Data.filename)   
     )
     await newProduct.save(async function(err,docs) {
@@ -57,8 +57,8 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
         console.log(docs.sellerId+"님의"+docs.productId+"물건 입력완료"+docs.updateDate)
         return;
     })
-    res.json({ans : true}); */
-    res.send(consoleArray)
+    res.json({ans : true}); 
+    //res.send(consoleArray)
 
 })
 
