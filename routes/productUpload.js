@@ -36,6 +36,7 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
 
     newProduct.productSelled = false
     newProduct.updateDate = nowDate;
+    console.log(req.decoded)
     console.log(req.body)
     console.log(req.files)
     let consoleArray = []
