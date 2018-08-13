@@ -36,6 +36,9 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     newProduct.updateDate = nowDate;
     console.log(req.body)
     console.log(req.files)
+    let consoleArray = []
+    await consoleArray.push(req.body)
+    await consoleArray.push(req.files)
     /*await req.files.map(Data => 
         newProduct.productImg.push(Data.filename)   
     )
@@ -52,7 +55,7 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
         return;
     })
     res.json({ans : true}); */
-    res.json(req)
+    res.send(consoleArray)
 
 })
 
