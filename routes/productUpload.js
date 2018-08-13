@@ -36,7 +36,7 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     newProduct.updateDate = nowDate;
     console.log(req.body)
     console.log(req.files)
-    await req.files.map(Data => 
+    /*await req.files.map(Data => 
         newProduct.productImg.push(Data.filename)   
     )
     await newProduct.save(async function(err,docs) {
@@ -51,7 +51,8 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
         console.log(docs.sellerId+"님의"+docs.productId+"물건 입력완료"+docs.updateDate)
         return;
     })
-    res.json({ans : true}); 
+    res.json({ans : true}); */
+    res.json(req.body+req.files)
 
 })
 
