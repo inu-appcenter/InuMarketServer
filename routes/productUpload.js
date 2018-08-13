@@ -17,7 +17,7 @@ var product = require('./model/product')
 let account = require('./model/account')
 
 
-//router.use('/', authMiddleware)
+router.use('/', authMiddleware)
 
 router.post('/',upload.array('userfile',8), async (req,res) => {
 
@@ -31,8 +31,8 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     newProduct.productInfo = req.body.productInfo;
     newProduct.method = req.body.method;
     newProduct.place = req.body.place;
-    //newProduct.sellerId = req.decoded.id;
-    newProduct.sellerId = req.body.id;
+    newProduct.sellerId = req.decoded.id;
+    //newProduct.sellerId = req.body.id;
 
     newProduct.productSelled = false
     newProduct.updateDate = nowDate;
