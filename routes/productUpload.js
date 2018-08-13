@@ -52,7 +52,7 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
         return;
     })
     res.json({ans : true}); */
-    res.json(req.body+req.files)
+    res.json(req)
 
 })
 
