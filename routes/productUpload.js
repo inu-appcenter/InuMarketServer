@@ -34,6 +34,8 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
     newProduct.sellerId = req.decoded.id;
     newProduct.productSelled = false
     newProduct.updateDate = nowDate;
+    console.log(req.body)
+    console.log(req.files)
     await req.files.map(Data => 
         newProduct.productImg.push(Data.filename)   
     )
