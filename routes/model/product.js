@@ -13,6 +13,8 @@ var productSchema = new Schema({
     place : String,
     category : String,
     sellerId : String,
+    sellerName : String,
+    sellerPhone : String,
     productId : {
         type : String,
         unique : true,        

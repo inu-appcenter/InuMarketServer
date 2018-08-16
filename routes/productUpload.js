@@ -36,12 +36,14 @@ router.post('/',upload.array('userfile',8), async (req,res) => {
 
     newProduct.productSelled = false
     newProduct.updateDate = nowDate;
-    //console.log(req.decoded)
-    console.log(req.body)
-    console.log(req.files)
-    let consoleArray = []
-    await consoleArray.push(req.body)
-    await consoleArray.push(req.files)
+    await account.find({"id":newProduct.sellerId},(err,docs)=>{
+        if(err) throw err
+        else {
+            newProduct.sellerName = docs[0].name
+            newProduct.sellerPhone = docs[0].tel
+        }
+    })
+
     await req.files.map(Data => 
         newProduct.productImg.push(Data.filename)   
     )
