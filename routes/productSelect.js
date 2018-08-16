@@ -6,7 +6,7 @@ const authMiddleware = require('./function/auth')
 //router.use('/',authMiddleware)
 
 router.post('/main',async(req,res)=> {
-    await product.find({},
+    await product.find({"productSelled":false},
         {
             "_id":false,
             "productStar":false,
@@ -26,7 +26,7 @@ router.post('/main',async(req,res)=> {
 })
 
 router.post('/oneItem',async (req,res)=>{
-    await product.findOne({"productId":req.body.productId}).exec(function(err,docs){
+    await product.findOne({"productId":req.body.productId,"productSelled":false}).exec(function(err,docs){
         if(err){
             throw err
         }
@@ -38,7 +38,7 @@ router.post('/oneItem',async (req,res)=>{
 
 router.post('/search',async (req,res)=> {
     const Name = req.body.productName
-    await product.find({"productName":{$regex:req.body.productName,$options:'i'}},{
+    await product.find({"productName":{$regex:req.body.productName,$options:'i'},"productSelled":false},{
         "_id":false,
         "productStar":false,
         "productInfo":false,
@@ -114,7 +114,7 @@ router.post('/searchId',async (req,res)=>{
 })
 
 router.post('/category',async (req,res)=>{
-    await product.find({"category":{$regex:req.body.category,$options:'i'}},{
+    await product.find({"category":{$regex:req.body.category,$options:'i'},"productSelled":false},{
         "_id":false,
         "productStar":false,
         "productInfo":false,
