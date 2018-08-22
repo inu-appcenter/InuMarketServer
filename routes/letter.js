@@ -69,7 +69,7 @@ router.post('/send',async (req,res)=>{
         }
     )
     
-    await product.update({"productId" : req.body.productId},{$inc:{productStart:1}}).exec((err,docs) => {
+    await product.update({"productId" : req.body.productId},{$inc:{productStar:1}}).exec((err,docs) => {
         if(err){
             throw err
         }
