@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const letter = require('./model/letter')
 const account = require('./model/account')
+const product = require('./model/product')
 
 router.post('/send',async (req,res)=>{
     const sellerLetter = new letter() //판매자에게 가는 쪽지
@@ -68,6 +69,12 @@ router.post('/send',async (req,res)=>{
         }
     )
     
+    await product.update({"productId" : req.body.productId},{$inc:{productStart:1}}).exec((err,docs) => {
+        if(err){
+            throw err
+        }
+    })
+
     res.json({ans:true})
 
 })
