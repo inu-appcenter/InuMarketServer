@@ -78,7 +78,7 @@ router.post('/changePasswd',async (req,res)=>{
     })
 })
 
-router.post('/changeTell',async(req,res) =>
+router.post('/changeTel',async(req,res) =>
 {
     await account.update({"id":req.body.id},{$set:{tel: req.body.newTel}}).exec((err) =>{
         if(err) {
