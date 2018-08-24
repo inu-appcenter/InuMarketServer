@@ -27,12 +27,16 @@ router.post('/send',async (req,res)=>{
     customerLetter.productSelled = false
     customerLetter.sendDate = nowDate
 
+    if(req.body.sellerId == req.body.custId){
+        res.json({ans:false})
+    }else{
     await account.find({"id":req.body.custId}).exec(
         async (err,docs)=>{
             if(err) throw err
             else{
-                sellerLetter.senderPhone = docs[0].tel
-                sellerLetter.senderName = docs[0].name
+                sellerLetter.senderPhone = await docs[0].tel
+                sellerLetter.senderName = await docs[0].name
+                console.log(sellerLetter)
                 await sellerLetter.save(async (err,docs)=>{
                     if(err){
                         console.log(err);
@@ -55,8 +59,9 @@ router.post('/send',async (req,res)=>{
         async (err,docs)=>{
             if(err) throw err
             else{
-                customerLetter.senderPhone = docs[0].tel
-                customerLetter.senderName = docs[0].name
+                customerLetter.senderPhone = await docs[0].tel
+                customerLetter.senderName = await docs[0].name
+                console.log(docs[0])
                 await customerLetter.save(async(err,docs)=>{
                     if(err){
                         console.log(err)
@@ -80,7 +85,7 @@ router.post('/send',async (req,res)=>{
     })
 
     res.json({ans:true})
-
+}
 })
 
 router.post('/list',async (req,res)=>{
