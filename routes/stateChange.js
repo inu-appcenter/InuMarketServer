@@ -91,4 +91,17 @@ router.post('/changePasswd',async (req,res)=>{
     })
 })
 
+router.post('/changeTel',async(req,res) =>
+{
+    await account.update({"id":req.body.id},{$set:{tel: req.body.newTel}}).exec((err) =>{
+        if(err) {
+            throw err
+            res.json({ans:"err"})
+        }
+        else{
+            res.json({ans:true})
+        }
+    })
+})
+
 module.exports = router
