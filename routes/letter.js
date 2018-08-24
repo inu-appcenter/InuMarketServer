@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const letter = require('./model/letter')
 const account = require('./model/account')
+const product = require('./model/product')
 
 router.post('/send',async (req,res)=>{
     const sellerLetter = new letter() //판매자에게 가는 쪽지
@@ -14,6 +15,7 @@ router.post('/send',async (req,res)=>{
     sellerLetter.letterRead = false
     sellerLetter.productId = req.body.productId
     sellerLetter.productName = req.body.productName
+    sellerLetter.productSelled = false
     sellerLetter.sendDate = nowDate
     
     customerLetter.sendId = req.body.sellerId
@@ -22,6 +24,7 @@ router.post('/send',async (req,res)=>{
     customerLetter.letterRead = false
     customerLetter.productId = req.body.productId
     customerLetter.productName = req.body.productName
+    customerLetter.productSelled = false
     customerLetter.sendDate = nowDate
 
     await account.find({"id":req.body.custId}).exec(
@@ -29,6 +32,7 @@ router.post('/send',async (req,res)=>{
             if(err) throw err
             else{
                 sellerLetter.senderPhone = docs[0].tel
+                sellerLetter.senderName = docs[0].name
                 await sellerLetter.save(async (err,docs)=>{
                     if(err){
                         console.log(err);
@@ -52,6 +56,7 @@ router.post('/send',async (req,res)=>{
             if(err) throw err
             else{
                 customerLetter.senderPhone = docs[0].tel
+                customerLetter.senderName = docs[0].name
                 await customerLetter.save(async(err,docs)=>{
                     if(err){
                         console.log(err)

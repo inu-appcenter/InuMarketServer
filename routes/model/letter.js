@@ -9,6 +9,8 @@ const letterSchema = new Schema({
     letterRead : Boolean,
     productId : String,
     productName : String,
+    productSelled : false,
+    senderName : String,
     senderPhone : String,
     letterId : {
         type : String,

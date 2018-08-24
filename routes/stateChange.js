@@ -6,6 +6,7 @@ const account = require('./model/account')
 const mailing = require('./config/sendEmail')
 const config = require('./config/config')
 const crypto = require('crypto')
+const letter = require('./model/letter')
 
 
 router.post('/product',async (req,res) => {
@@ -18,7 +19,19 @@ router.post('/product',async (req,res) => {
             res.json({ans:false})
         }
         else{
-            res.json({ans:true})
+            letter.update(
+                {"productId":req.body.productId},
+                {$set:{productSelled:true}},
+                {multi:true}
+            ).exec((err)=>{
+                if(err){
+                    throw err
+                    res.json({ans:false})
+                }
+                else{
+                    res.json({ans:true})
+                }
+            })
         }
     })
 })
