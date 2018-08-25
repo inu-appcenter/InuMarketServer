@@ -10,6 +10,7 @@ const letterSchema = new Schema({
     productId : String,
     productName : String,
     productSelled : false,
+    productCategory : String,
     senderName : String,
     senderPhone : String,
     letterId : {
