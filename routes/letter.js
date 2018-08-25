@@ -9,6 +9,7 @@ router.post('/send',async (req,res)=>{
     const customerLetter = new letter() //구매자에게 가는 쪽지
     const nowDate = new Date()
 
+    console.log(req.body)
     sellerLetter.sendId = req.body.custId
     sellerLetter.reciveId = req.body.sellerId
     sellerLetter.sellBuy = true //판매중인상품
