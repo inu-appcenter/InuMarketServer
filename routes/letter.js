@@ -15,6 +15,7 @@ router.post('/send',async (req,res)=>{
     sellerLetter.letterRead = false
     sellerLetter.productId = req.body.productId
     sellerLetter.productName = req.body.productName
+    sellerLetter.productCategory = req.body.category
     sellerLetter.productSelled = false
     sellerLetter.sendDate = nowDate
     
@@ -24,65 +25,95 @@ router.post('/send',async (req,res)=>{
     customerLetter.letterRead = false
     customerLetter.productId = req.body.productId
     customerLetter.productName = req.body.productName
+    customerLetter.productCategory = req.body.category
     customerLetter.productSelled = false
     customerLetter.sendDate = nowDate
+
+
+
+    
 
     if(req.body.sellerId == req.body.custId){
         res.json({ans:false})
     }else{
-    await account.find({"id":req.body.custId}).exec(
-        async (err,docs)=>{
+
+        await letter.find({$or:[{"sendId":req.body.sellerId},{"sendId":req.body.custId}],"productId":req.body.productId})
+        .exec(async (err,docs)=>{
+            if(err) throw err
+            else {
+                if(docs[0]==undefined || docs[0]=="undefined"){
+                    await product.update({"productId" : req.body.productId},{$inc:{productStar:1}}).exec((err,docs) => {
+                        if(err){
+                            throw err
+                        }
+                    })
+                }
+            }
+        })
+
+        await letter.find({"sendId":req.body.custId,"productId":req.body.productId})
+        .exec(async (err,docs)=>{
             if(err) throw err
             else{
-                sellerLetter.senderPhone = await docs[0].tel
-                sellerLetter.senderName = await docs[0].name
-                console.log(sellerLetter)
-                await sellerLetter.save(async (err,docs)=>{
-                    if(err){
-                        console.log(err);
-                        throw err
-                    }
-                    else{
-                        await account.update({"id":docs.sendId},
-                        {$push:{letterNum:docs.letterId}},
-                        {upsert:true})
-                        console.log("to"+req.body.sellerId+"from"+req.body.custId)
-                    }
-            
-            
-                })
+                if(docs[0]==undefined || docs[0]=="undefined"){
+                    await account.find({"id":req.body.custId}).exec(
+                        async (err,docs)=>{
+                            if(err) throw err
+                            else{
+                                sellerLetter.senderPhone = await docs[0].tel
+                                sellerLetter.senderName = await docs[0].name
+                                await sellerLetter.save(async (err,docs)=>{
+                                    if(err){
+                                        console.log(err);
+                                        throw err
+                                    }
+                                    else{
+                                        await account.update({"id":docs.sendId},
+                                        {$push:{letterNum:docs.letterId}},
+                                        {upsert:true})
+                                        console.log("to"+req.body.sellerId+"from"+req.body.custId)
+                                    }
+                                })
+                            }
+                        }
+                    )
+                }
             }
-        }
-    )
+        })
     
-    await account.find({"id":req.body.sellerId}).exec(
-        async (err,docs)=>{
+    
+        await letter.find({"sendId":req.body.sellerId,"productId":req.body.productId})
+        .exec(async (err,docs)=>{
             if(err) throw err
             else{
-                customerLetter.senderPhone = await docs[0].tel
-                customerLetter.senderName = await docs[0].name
-                console.log(docs[0])
-                await customerLetter.save(async(err,docs)=>{
-                    if(err){
-                        console.log(err)
-                        throw err
-                    }
-                    else{
-                        await account.update({"id":docs.sendId},
-                        {$push:{letterNum:docs.letterId}},
-                        {upsert:true})
-                        console.log("to"+req.body.custId+"from"+req.body.sellerId)
-                    }
-                })
+                if(docs[0]==undefined || docs[0]=="undefined"){
+                    await account.find({"id":req.body.sellerId}).exec(
+                        async (err,docs)=>{
+                            if(err) throw err
+                            else{
+                                customerLetter.senderPhone = await docs[0].tel
+                                customerLetter.senderName = await docs[0].name
+                                await customerLetter.save(async(err,docs)=>{
+                                    if(err){
+                                        console.log(err)
+                                        throw err
+                                    }
+                                    else{
+                                        await account.update({"id":docs.sendId},
+                                        {$push:{letterNum:docs.letterId}},
+                                        {upsert:true})
+                                        console.log("to"+req.body.custId+"from"+req.body.sellerId)
+                                    }
+                                })
+                            }
+                        }
+                    )
+                }
             }
-        }
-    )
+        })
     
-    await product.update({"productId" : req.body.productId},{$inc:{productStar:1}}).exec((err,docs) => {
-        if(err){
-            throw err
-        }
-    })
+    
+    
 
     res.json({ans:true})
 }
