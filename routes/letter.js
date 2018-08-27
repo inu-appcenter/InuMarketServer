@@ -52,7 +52,10 @@ router.post('/send',async (req,res)=>{
                         }
                     })
                 }
-                res.json({ans:"duplicate"})
+                else{
+                    res.json({ans:"duplicate"})
+                }
+                
             }
         })
 
