@@ -35,7 +35,7 @@ router.post('/send',async (req,res)=>{
     
 
     if(req.body.sellerId == req.body.custId){
-        res.json({ans:false})
+        res.json({ans:"false"})
     }else{
 
         await letter.find({$or:[{"sendId":req.body.sellerId},{"sendId":req.body.custId}],"productId":req.body.productId})
@@ -48,7 +48,7 @@ router.post('/send',async (req,res)=>{
                             throw err
                         }
                         else{
-                            res.json({ans:true})
+                            res.json({ans:"true"})
                         }
                     })
                 }
