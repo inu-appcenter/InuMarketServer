@@ -47,8 +47,12 @@ router.post('/send',async (req,res)=>{
                         if(err){
                             throw err
                         }
+                        else{
+                            res.json({ans:true})
+                        }
                     })
                 }
+                res.json({ans:"duplicate"})
             }
         })
 
@@ -112,11 +116,6 @@ router.post('/send',async (req,res)=>{
                 }
             }
         })
-    
-    
-    
-
-    res.json({ans:true})
 }
 })
 
