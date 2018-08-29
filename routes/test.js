@@ -6,7 +6,7 @@ const noti = require('./config/fcmsend')
 
 
 router.post('/',async (req,res)=>{
-    noti("hi","hi")
+    noti("hi")
 
   //  send("limson222@gmail.com","fjfj")
     res.send(true)

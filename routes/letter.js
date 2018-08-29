@@ -3,13 +3,13 @@ const router = express.Router()
 const letter = require('./model/letter')
 const account = require('./model/account')
 const product = require('./model/product')
+const noti = require('./config/fcmsend')
 
 router.post('/send',async (req,res)=>{
     const sellerLetter = new letter() //판매자에게 가는 쪽지
     const customerLetter = new letter() //구매자에게 가는 쪽지
     const nowDate = new Date()
 
-    console.log(req.body)
     sellerLetter.sendId = req.body.custId
     sellerLetter.reciveId = req.body.sellerId
     sellerLetter.sellBuy = true //판매중인상품
@@ -38,26 +38,7 @@ router.post('/send',async (req,res)=>{
         res.json({ans:"false"})
     }else{
 
-        await letter.find({$or:[{"sendId":req.body.sellerId},{"sendId":req.body.custId}],"productId":req.body.productId})
-        .exec(async (err,docs)=>{
-            if(err) throw err
-            else {
-                if(docs[0]==undefined || docs[0]=="undefined"){
-                    await product.update({"productId" : req.body.productId},{$inc:{productStar:1}}).exec((err,docs) => {
-                        if(err){
-                            throw err
-                        }
-                        else{
-                            res.json({ans:"true"})
-                        }
-                    })
-                }
-                else{
-                    res.json({ans:"duplicate"})
-                }
-                
-            }
-        })
+        
 
         await letter.find({"sendId":req.body.custId,"productId":req.body.productId})
         .exec(async (err,docs)=>{
@@ -117,6 +98,27 @@ router.post('/send',async (req,res)=>{
                         }
                     )
                 }
+            }
+        })
+        await letter.find({$or:[{"sendId":req.body.sellerId},{"sendId":req.body.custId}],"productId":req.body.productId})
+        .exec(async (err,docs)=>{
+            if(err) throw err
+            else {
+                if(docs[0]==undefined || docs[0]=="undefined"){
+                    await product.update({"productId" : req.body.productId},{$inc:{productStar:1}}).exec(async (err,docs) => {
+                        if(err){
+                            throw err
+                        }
+                        else{
+                            await noti(req.body.sellerId)
+                            res.json({ans:"true"})
+                        }
+                    })
+                }
+                else{
+                    res.json({ans:"duplicate"})
+                }
+                
             }
         })
 }
