@@ -31,6 +31,12 @@ router.post('/',function(req,res,net){
                             }
                         )
                     })
+                    if(req.body.FCM !=null || req.body.FCM !=undefined || req.body.FCM !=""){
+                        account.update({"id":req.body.id},{$set:{FCM:req.body.FCM}},{upsert:true},(err)=>{ 
+                            if(err) throw err;
+                            console.log("success save fcm")
+                        })
+                    }
                     console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
                     console.log(id.id+"님 login success!")
                     return p 
