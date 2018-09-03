@@ -83,30 +83,3 @@ router.post('/',function(req,res,net){
 })
 
 module.exports = router;
-/*const express = require("express");
-const router = express.Router();
-
-router.get('/',function(req,res,next){
-    res.send("this is get");
-})
-
-router.post('/',function(req,res,next){
-    if(req.query.id === null || req.query.id === undefined){
-        res.send(false);
-    }
-    else {
-        if(req.query.id != "201301484"){
-            res.send(false);
-        }
-        else {
-            if(req.query.passwd != "0"){
-                res.send(false);
-            }
-            else{
-                res.send(true);
-            }
-        }
-    }
-})
-
-module.exports = router;*/

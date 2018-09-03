@@ -13,7 +13,8 @@ var login = require("./routes/login"),
     productSelect = require('./routes/productSelect'),
     verified = require('./routes/verified'),
     letter = require('./routes/letter'),
-    stateChange = require('./routes/stateChange')
+    stateChange = require('./routes/stateChange'),
+    readBanner = require('./routes/readBanner')
 
 
 var app = express(),
@@ -54,6 +55,7 @@ app.use('/PSelect',productSelect)
 app.use('/verified',verified)
 app.use('/letter',letter)
 app.use('/stateChange',stateChange)
+app.use('/readBanner',readBanner)
 
 
 app.use(function(req,res,next) {
