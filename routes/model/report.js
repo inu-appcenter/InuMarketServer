@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const reportSchema = new Schema({
     sender : String,
     context : String,
-    date : Date.now
+    date : Date
 })
 
 module.exports = mongoose.model('rform',reportSchema)

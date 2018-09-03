@@ -8,6 +8,7 @@ router.post('/',async(req,res) => {
         const nineOneOneReport = new report()
         nineOneOneReport.sender = req.body.senderId
         nineOneOneReport.context = req.body.kind +"분야로 '"+req.body.productId + "' 아이템 신고되엇습니다"
+        nineOneOneReport.date = Date.now
         nineOneOneReport.save(async(err)=>{
             if(err) throw err
             res.json({ans:true})
@@ -17,6 +18,7 @@ router.post('/',async(req,res) => {
         const moonHeeReport = new report()
         moonHeeReport.sender = req.body.senderId
         moonHeeReport.context = req.body.context
+        moonHeeReport.date = Date.now
         moonHeeReport.save(async(err) =>{
             if(err) throw err
             res.json({ans:true})
