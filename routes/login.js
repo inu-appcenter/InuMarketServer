@@ -11,7 +11,7 @@ router.post('/',function(req,res,net){
         if(!id) {
             console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
             console.log("worng id")
-            throw new Error('flase')
+            throw new Error('false')
         }else {
             if(id.verify(passwd)) {
                 if(id.certification === true){
