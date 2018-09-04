@@ -26,7 +26,7 @@ router.post('/',(req,res) => {
     }
 })
 
-router.post('/read',(req,res)=>{
+router.get('/read',(req,res)=>{
     report.find({}).exec((err,docs)=>{
         if(err) throw err
         res.send(docs[0])
