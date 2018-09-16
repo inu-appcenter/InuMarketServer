@@ -8,11 +8,27 @@ var checkId = require('./function/checkId');
 const crypto = require('crypto')
 const config = require('./config/config')
 const sendVerifiMail = require('./config/sendEmail')
+const path = require('path')
+const fs = require('fs')
+      logDir = 'log'
+      winston = require('winston')
+require('winston-daily-rotate-file')
+if(!fs.existsSync(logDir)) fs.mkdirSync(logDir)
+const logFilename = path.join(__dirname, '/../', logDir, '/application-%DATE%-accouont.log');
+let transport = new(winston.transports.DailyRotateFile)({
+    filename:logFilename,
+    datePattern : 'YYYY-MM-DD',
+    zippedArchive: true
+})
+let logger = winston.createLogger({
+    transports:[
+        transport
+    ]
+});
 
 router.post('/',async (req,res) => {
     try{
         const nowDate = new Date();
-        console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
         var checkIdValue = await checkId(req.body.id)
         if(checkIdValue === 1 ) {
             let passwd = req.body.passwd
@@ -33,17 +49,19 @@ router.post('/',async (req,res) => {
                     return;
                 }
                 await sendVerifiMail(docs.id+"@inu.ac.kr",docs.accountId,"account")
-                console.log(newAccount.name +"회원가입성공")
+                logger.info("ip = "+req.connection.remoteAddress+" time = "+nowDate+newAccount.name +"회원가입성공")
                 return;
             })
             res.json({ans : true });
         }
         else{
             res.json({ans : false});
+            logger.error("ip = "+req.connection.remoteAddress+" time = "+nowDate+newAccount.name+"회원가입실패")
             return false;
         }
     }catch(error) {
         res.json({ans : false});
+        logger.error("ip = "+req.connection.remoteAddress+" time = "+nowDate+" "+error)
         console.log(error);
     }
 })

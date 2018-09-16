@@ -3,8 +3,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken')
 const account = require('./model/account')
 const path = require('path')
-//const logger = require('./function/logger')
-
 const fs = require('fs')
       logDir = 'log'
       winston = require('winston')
