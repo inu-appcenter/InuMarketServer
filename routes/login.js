@@ -33,6 +33,7 @@ router.post('/',function(req,res,net){
     const check = (id) => {
         if(!id) {
             logger.info("ip = "+req.connection.remoteAddress+" time = "+nowDate+"worng id"+id.id)
+
             throw new Error('false')
         }else {
             if(id.verify(passwd)) {
