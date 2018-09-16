@@ -3,6 +3,8 @@ const express = require('express'),
       mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
       config = require('./routes/config/config')
+      
+
 
 var login = require("./routes/login"),
     account = require('./routes/account'),
@@ -43,6 +45,7 @@ mongoose.connect('mongodb://localhost/INUM')
 io.on("connection", (socket) => {
     console.log("socket is connect") 
 })
+
 
 app.use("/login",login);
 app.use('/account',account);

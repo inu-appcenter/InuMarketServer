@@ -2,16 +2,38 @@ const express = require("express");
 const router = express.Router();
 const jwt = require('jsonwebtoken')
 const account = require('./model/account')
+const path = require('path')
+//const logger = require('./function/logger')
+
+const fs = require('fs')
+      logDir = 'log'
+      winston = require('winston')
+require('winston-daily-rotate-file')
+if(!fs.existsSync(logDir)) fs.mkdirSync(logDir)
+const logFilename = path.join(__dirname, '/../', logDir, '/application-%DATE%.log');
+let transport = new(winston.transports.DailyRotateFile)({
+    filename:logFilename,
+    datePattern : 'YYYY-MM-DD',
+    zippedArchive: true
+})
+let logger = winston.createLogger({
+    transports:[
+        transport
+    ]
+});
 
 const nowDate = new Date();
+
+
+//router.use('/',logger)
+
 router.post('/',function(req,res,net){
     const {id,passwd} = req.body
     const secret = req.app.get('jwt-secret')
     const check = (id) => {
         if(!id) {
-            console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
-            console.log("worng id")
-            throw new Error('flase')
+            logger.info("ip = "+req.connection.remoteAddress+" time = "+nowDate+"worng id"+id.id)
+            throw new Error('false')
         }else {
             if(id.verify(passwd)) {
                 if(id.certification === true){
@@ -34,20 +56,19 @@ router.post('/',function(req,res,net){
                     if(req.body.FCM !=null || req.body.FCM !=undefined || req.body.FCM !=""){
                         account.update({"id":req.body.id},{$set:{FCM:req.body.FCM}},{upsert:true},(err)=>{ 
                             if(err) throw err;
-                            console.log("success save fcm")
                         })
                     }
-                    console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
-                    console.log(id.id+"님 login success!")
+                    console.log()
+                    logger.info("ip = "+req.connection.remoteAddress+" time = "+nowDate + id.id+"님 login success!")
                     return p 
                 }
                 else{
                     throw new Error('certification')
+                    logger.error("ip = "+req.connection.remoteAddress+" time = "+nowDate + id.id+'certification')
                 }
                 
             } else {
-                console.log("ip = "+req.connection.remoteAddress+" time = "+nowDate)
-                console.log("wrong password");
+                logger.info("ip = "+req.connection.remoteAddress+" time = "+nowDate+id.id+"wrong password")
                 throw new Error ('false')
             }
         }
