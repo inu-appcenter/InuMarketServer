@@ -25,10 +25,10 @@ let logger = winston.createLogger({
         transport
     ]
 });
+const nowDate = new Date();
 
 router.post('/',async (req,res) => {
     try{
-        const nowDate = new Date();
         var checkIdValue = await checkId(req.body.id)
         console.log(req.body)
         if(checkIdValue === 1 ) {
