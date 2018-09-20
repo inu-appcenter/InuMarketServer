@@ -30,6 +30,7 @@ router.post('/',async (req,res) => {
     try{
         const nowDate = new Date();
         var checkIdValue = await checkId(req.body.id)
+        console.log(req.body)
         if(checkIdValue === 1 ) {
             let passwd = req.body.passwd
             const encrypted = crypto.createHmac('sha1', config.secret)
@@ -55,14 +56,13 @@ router.post('/',async (req,res) => {
             res.json({ans : true });
         }
         else{
-            res.json({ans : false});
             logger.error("ip = "+req.connection.remoteAddress+" time = "+nowDate+newAccount.name+"회원가입실패")
-            return false;
+            res.json({ans : false});
         }
     }catch(error) {
-        res.json({ans : false});
         logger.error("ip = "+req.connection.remoteAddress+" time = "+nowDate+" "+error)
         console.log(error);
+        res.json({ans : false});
     }
 })
 
