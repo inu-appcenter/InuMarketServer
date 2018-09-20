@@ -56,7 +56,7 @@ router.post('/',async (req,res) => {
             res.json({ans : true });
         }
         else{
-            logger.error("ip = "+req.connection.remoteAddress+" time = "+nowDate+newAccount.name+"회원가입실패")
+            logger.error("ip = "+req.connection.remoteAddress+" time = "+nowDate+req.body.name+"회원가입실패")
             res.json({ans : false});
         }
     }catch(error) {
