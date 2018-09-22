@@ -38,4 +38,4 @@ accountSchema.methods.verify = function(passwd){
     return this.passwd === encrypted
 }
 
-module.exports = mongoose.model('accountForm',accountSchema);
+module.exports = mongoose.model('accountform',accountSchema);

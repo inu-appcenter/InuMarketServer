@@ -6,4 +6,4 @@ const bannerSchema = new Schema({
 
 })
 
-module.exports = mongoose.model('Bannerform',bannerSchema)
+module.exports = mongoose.model('bannerform',bannerSchema)

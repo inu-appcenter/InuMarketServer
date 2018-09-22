@@ -21,4 +21,4 @@ const letterSchema = new Schema({
     sendDate : Date
 })
 
-module.exports = mongoose.model('Letterform',letterSchema)
+module.exports = mongoose.model('letterform',letterSchema)

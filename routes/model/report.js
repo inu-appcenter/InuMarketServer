@@ -7,4 +7,4 @@ const reportSchema = new Schema({
     date : Date
 })
 
-module.exports = mongoose.model('Reportform',reportSchema)
+module.exports = mongoose.model('reportform',reportSchema)

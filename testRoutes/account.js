@@ -6,8 +6,8 @@ const product = require('./model/product')
 
 var checkId = require('./function/checkId');
 const crypto = require('crypto')
-const config = require('./config/config')
-const sendVerifiMail = require('./config/sendEmail')
+const config = require('../routes/config/config')
+const sendVerifiMail = require('../routes/config/sendEmail')
 const path = require('path')
 const fs = require('fs')
       logDir = 'log'

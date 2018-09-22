@@ -3,7 +3,7 @@ const router = express.Router()
 const letter = require('./model/letter')
 const account = require('./model/account')
 const product = require('./model/product')
-const noti = require('./config/fcmsend')
+const noti = require('../routes/config/fcmsend')
 
 router.post('/send',async (req,res)=>{
     const sellerLetter = new letter() //판매자에게 가는 쪽지
