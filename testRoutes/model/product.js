@@ -25,4 +25,4 @@ var productSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('Productform',productSchema)
+module.exports = mongoose.model('Ptform',productSchema)

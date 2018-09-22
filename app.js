@@ -3,6 +3,7 @@ const express = require('express'),
       mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
       config = require('./routes/config/config')
+      tconfig = require('./routes/config/config')
       
 
 
@@ -18,6 +19,19 @@ var login = require("./routes/login"),
     stateChange = require('./routes/stateChange'),
     readBanner = require('./routes/readBanner'),
     report = require('./routes/report')
+
+const tlogin = require("./testRoutes/login"),
+taccount = require('./testRoutes/account'),
+tcheck = require('./testRoutes/check'),
+timgUpload = require('./testRoutes/imgUpload'),
+ttest = require('./testRoutes/test'),
+tproductUpload = require('./testRoutes/productUpload'),
+tproductSelect = require('./testRoutes/productSelect'),
+tverified = require('./testRoutes/verified'),
+tletter = require('./testRoutes/letter'),
+tstateChange = require('./testRoutes/stateChange'),
+treadBanner = require('./testRoutes/readBanner'),
+treport = require('./testRoutes/report')
 
 
 var app = express(),
@@ -61,6 +75,21 @@ app.use('/letter',letter)
 app.use('/stateChange',stateChange)
 app.use('/readBanner',readBanner)
 app.use('/report',report)
+
+//test Server Routes
+app.use("/tlogin",tlogin);
+app.use('/taccount',taccount);
+app.use('/tcheck',tcheck);
+app.use('/timgUpload',timgUpload)
+app.use('/timgload',express.static('timage'))
+app.use('/ttest',ttest)
+app.use('/tPupload',tproductUpload)
+app.use('/tPSelect',tproductSelect)
+app.use('/tverified',tverified)
+app.use('/tletter',tletter)
+app.use('/tstateChange',tstateChange)
+app.use('/treadBanner',treadBanner)
+app.use('/treport',treport)
 
 
 app.use(function(req,res,next) {
