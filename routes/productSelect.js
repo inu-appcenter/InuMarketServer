@@ -6,7 +6,8 @@ const authMiddleware = require('./function/auth')
 //router.use('/',authMiddleware)
 
 router.post('/main',async(req,res)=> {
-    await product.find({"productSelled":false},
+    let sendArray = [];
+    await product.find({"productSelled":false,"category":{$regex:'식권',$options:'i'}},
         {
             "_id":false,
             "productStar":false,
@@ -15,12 +16,47 @@ router.post('/main',async(req,res)=> {
             "method":false,
             "place":false,
             "sellerId":false,
-        }).sort({updateDate:'desc'}).exec(function(err,docs){
+        }).sort({updateDate:'desc'}).exec(async function(err,docs){
         if(err){
             throw err
         }
         else{
-            res.send(docs)
+            sendArray.push(docs)
+            await product.find({"productSelled":false,"category":{$regex:'책',$options:'i'}},
+            {
+                "_id":false,
+                "productStar":false,
+                "productInfo":false,
+                "productState":false,
+                "method":false,
+                "place":false,
+                "sellerId":false,
+            }).sort({updateDate:'desc'}).exec(function(err,bookdocs){
+                if(err){
+                    throw err
+                }
+                else{
+                    sendArray.push(bookdocs)
+                    await product.find({"productSelled":false,"category":{$regex:'자취방',$options:'i'}},
+                    {
+                        "_id":false,
+                        "productStar":false,
+                        "productInfo":false,
+                        "productState":false,
+                        "method":false,
+                        "place":false,
+                        "sellerId":false,
+                    }).sort({updateDate:'desc'}).exec(function(err,roomdocs){
+                        if(err){
+                            throw err
+                        }
+                        else{
+                            sendArray.push(roomdocs)
+                            res.send(sendArray)
+                        }
+                    })
+                }
+            })
         }
     })
 })
@@ -51,6 +87,26 @@ router.post('/search',async (req,res)=> {
             throw(err)
         }
         else{
+            res.send(docs)
+        }
+    })
+})
+
+router.post('/categorysearch',async (req,res)=> {
+    const Name = req.body.productName
+    await product.find({'productName':{$regex:req.body.productName,$options:'i'},'category':{$regex:req.body.category,$options:'i'}},{
+        "_id":false,
+        "productStar":false,
+        "productInfo":false,
+        "productState":false,
+        "method":false,
+        "place":false,
+        "sellerId":false,
+    }).exec(function(err,docs) {
+        if(err) {
+            throw(err)
+        }
+        else {
             res.send(docs)
         }
     })

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const crypto = require('crypto')
-const config = require('../config/config')
+const config = require('../../routes/config/config')
 const shortid = require('shortid')
 
 var accountSchema = new Schema({
