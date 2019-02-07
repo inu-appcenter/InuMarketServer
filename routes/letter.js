@@ -186,7 +186,6 @@ router.post('/list',async (req,res)=>{
     letter.find({"reciveId":req.body.id}).sort({sendDate:"desc"}).exec((err,docs)=>{
         if(err){
             throw err
-            res.json({ans:"false"})
         }
         else{
             res.send(docs)

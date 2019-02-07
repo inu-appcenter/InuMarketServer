@@ -31,7 +31,7 @@ router.post('/main',async(req,res)=> {
                 "method":false,
                 "place":false,
                 "sellerId":false,
-            }).sort({updateDate:'desc'}).exec(function(err,bookdocs){
+            }).sort({updateDate:'desc'}).exec(async function(err,bookdocs){
                 if(err){
                     throw err
                 }
