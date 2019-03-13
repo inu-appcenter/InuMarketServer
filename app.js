@@ -54,6 +54,7 @@ app.use('/check',check);
 app.use('/imgUpload',imgUpload)
 app.use('/imgload',express.static('image'))
 app.use('/iosBanner',express.static('iosbanner'))
+app.use('/andBanner',express.static('andbanner'))
 app.use('/test',test)
 app.use('/Pupload',productUpload)
 app.use('/PSelect',productSelect)
