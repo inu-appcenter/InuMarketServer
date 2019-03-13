@@ -18,20 +18,7 @@ var login = require("./routes/login"),
     stateChange = require('./routes/stateChange'),
     readBanner = require('./routes/readBanner'),
     report = require('./routes/report')
-
-const tlogin = require("./testRoutes/login"),
-taccount = require('./testRoutes/account'),
-tcheck = require('./testRoutes/check'),
-timgUpload = require('./testRoutes/imgUpload'),
-ttest = require('./testRoutes/test'),
-tproductUpload = require('./testRoutes/productUpload'),
-tproductSelect = require('./testRoutes/productSelect'),
-tverified = require('./testRoutes/verified'),
-tletter = require('./testRoutes/letter'),
-tstateChange = require('./testRoutes/stateChange'),
-treadBanner = require('./testRoutes/readBanner'),
-treport = require('./testRoutes/report')
-
+    chat = require('./routes/chat')
 
 var app = express(),
     router = express.Router();
@@ -42,6 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
 app.set('jwt-secret', config.secret)
+app.set('socketio',io)
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
@@ -74,22 +62,7 @@ app.use('/letter',letter)
 app.use('/stateChange',stateChange)
 app.use('/readBanner',readBanner)
 app.use('/report',report)
-
-//test Server Routes
-app.use("/tlogin",tlogin);
-app.use('/taccount',taccount);
-app.use('/tcheck',tcheck);
-app.use('/timgUpload',timgUpload)
-app.use('/timgload',express.static('timage'))
-app.use('/ttest',ttest)
-app.use('/tPupload',tproductUpload)
-app.use('/tPSelect',tproductSelect)
-app.use('/tverified',tverified)
-app.use('/tletter',tletter)
-app.use('/tstateChange',tstateChange)
-app.use('/treadBanner',treadBanner)
-app.use('/treport',treport)
-
+app.use('/chat',chat)
 
 app.use(function(req,res,next) {
     var err = new Error ("Not Found");
@@ -99,4 +72,4 @@ app.use(function(req,res,next) {
 
 app.get("/", (req,res) => res.send("Hello Express"));
 
-http.listen(7000, () => console.log("express listening on posrt 7000"));
+io.listen(7000, () => console.log("express listening on port 7000"));
