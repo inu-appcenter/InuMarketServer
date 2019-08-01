@@ -63,6 +63,9 @@ files/
 # build directories
 build/
 
+# config directories
+routes/config/
+
 # TypeScript v1 declaration files
 typings/
 
