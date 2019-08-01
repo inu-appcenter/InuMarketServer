@@ -64,7 +64,7 @@ files/
 build/
 
 # config directories
-routes/config/
+config/
 
 # TypeScript v1 declaration files
 typings/
@@ -86,6 +86,9 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# vscode
+.vscode/
 
 # next.js build output
 .next
