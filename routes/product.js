@@ -57,7 +57,7 @@ router.get('/mainList',async (req,res)=>{
 })
 
 router.get('/oneItem',async(req,res)=>{
-    res.status(200).send(await productquery.oneItem(req.body.productId))
+    res.status(200).send(await productquery.oneItem(req.query.productId))
 })
 
 router.get('/search',async(req,res)=>{
@@ -69,11 +69,11 @@ router.get('/categorySearch',async(req,res)=>{
 })
 
 router.get('/userItem',async(req,res)=>{
-    res.status(200).send(await productquery.userItem(req.body.userId))
+    res.status(200).send(await productquery.userItem(req.query.userId))
 })
 
 router.get('/category',async(req,res)=>{
-    res.status(200).send(await productquery.category(req.body.category))
+    res.status(200).send(await productquery.category(req.query.category))
 })
 
 router.put('/selling',async(req,res)=>{

@@ -1,6 +1,6 @@
 const product = require('../model/product')
 
-upload = (query) =>{
+const upload = (query) =>{
     const moment = require('moment-timezone')
     
     const nowDate = moment.tz(new Date(),"Asia/Seoul").format('YYYY-MM-DD hh:mm:ss')
@@ -25,8 +25,8 @@ upload = (query) =>{
     return newProduct.save() ? true : false
 }
 
-mainList = async() => {
-    findList = (kind) => {
+const mainList = async() => {
+    const findList = (kind) => {
         let promise = product.find({"productSelled":false,"category":{$regex:kind,$options:'i'}},{
             "_id":false,
             "productStar":false,
@@ -47,12 +47,12 @@ mainList = async() => {
     return Promise.all(returnArray).then((res)=>res)       
 }
 
-oneItem = async(productId) => {
+const oneItem = async(productId) => {
     const returnItem = product.findOne({"productId":productId,"productSelled":false}).exec()
     return returnItem.then((res)=>res)
 }
 
-search = async(searchName) => {
+const search = async(searchName) => {
     const returnItems = product.find({"productName":{$regex:searchName,$options:'i'},"productSelled":false},{
         "_id":false,
         "productStar":false,
@@ -66,7 +66,7 @@ search = async(searchName) => {
     return returnItems.then((res)=> res)
 }
 
-categorySearch = async(searchName,category) => {
+const categorySearch = async(searchName,category) => {
     const returnItems = product.find({'productName':{$regex:searchName,$options:'i'},'category':{$regex:category,$options:'i'}},{
         "_id":false,
         "productStar":false,
@@ -80,7 +80,7 @@ categorySearch = async(searchName,category) => {
     return returnItems.then((res)=>res)
 }
 
-userItem = async(sellerId) => {
+const userItem = async(sellerId) => {
     const returnItems = product.find({"sellerId":sellerId},{
         "_id":false,
         "productStar":false,
@@ -92,7 +92,7 @@ userItem = async(sellerId) => {
     return returnItems.then((res)=>res)
 }
 
-category = async(category)=>{
+const category = async(category)=>{
     const returnItems = product.find({"category":{$regex:category,$options:'i'},"productSelled":false},{
         "_id":false,
         "productStar":false,
@@ -105,11 +105,11 @@ category = async(category)=>{
     return returnItems.then((res)=>res)
 }
 
-selling = async(productId) => {
+const selling = async(productId) => {
     return product.updateOne({"productId":productId},{$set:{productSelled:true}}).exec().then((res)=>res.n)
 }
 
-removeOne = async(productId) => {
+const removeOne = async(productId) => {
     const deleteReturn = product.deleteOne({"productId":productId}).exec()
     return deleteReturn.then((res)=>res.n)
 }
