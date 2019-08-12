@@ -1,9 +1,18 @@
 module.exports = function(io) {
     io.on('connection', (socket) => {
-        console.log('io connect');
+        console.log(`${socket.id}`);
       socket.on('disconnect', () => {
           console.log('user disconnected');
       });
+
+      socket.on("clientMessgae", (data)=>{
+          console.log(data)
+          var message = {
+              msg: "server",
+              data: "data"
+          }
+          socket.emit('serverMessage', message)
+      })
     
       socket.on('leaveRoom', (roomname, name) => {
           socket.leave(roomname, () => {
