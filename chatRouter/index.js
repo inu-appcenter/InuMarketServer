@@ -3,6 +3,14 @@ module.exports = function(io) {
         console.log(`${socket.id}`);
       socket.on('disconnect', () => {
           console.log('user disconnected');
+        socket.on("clientMessgae", (data)=>{
+        console.log(data)
+        var message = {
+            msg: "server",
+            data: "data"
+        }
+        socket.emit('serverMessage', message)
+    })
       });
 
       socket.on("clientMessgae", (data)=>{
