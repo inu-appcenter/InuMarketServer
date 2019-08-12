@@ -14,7 +14,11 @@ const app = express()
 const server = require("http").createServer(app)
 const io = require("socket.io")(server)
 
-require('./chatRouter')(io);
+io.on('connection',(socket)=>{
+    console.log(socket.id)
+})
+
+// require('./chatRouter')(io);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
