@@ -2,11 +2,19 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose')
 
+
+
+
 const account = require('./routes/account')
 const product = require('./routes/product')
 
 
 const app = express()
+
+const server = require("http").createServer(app)
+const io = require("socket.io")(server)
+
+require('./chatRouter')(io);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -24,4 +32,4 @@ app.use('/imgload',express.static('files'))
 app.use('/iosBanner',express.static('iosbanner'))
 app.use('/andBanner',express.static('andbanner'))
 
-app.listen(7000, ()=>{console.log("express work")})
+server.listen(7000, ()=>{console.log("express work")})
