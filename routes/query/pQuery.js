@@ -34,7 +34,6 @@ const mainList = async() => {
             "productState":false,
             "method":false,
             "place":false,
-            "sellerId":false,
         }).sort({updateDate:'desc'}).limit(6)
         .exec()
         return promise
@@ -60,7 +59,6 @@ const search = async(searchName) => {
         "productState":false,
         "method":false,
         "place":false,
-        "sellerId":false,
     }).exec()
 
     return returnItems.then((res)=> res)
@@ -74,7 +72,6 @@ const categorySearch = async(searchName,category) => {
         "productState":false,
         "method":false,
         "place":false,
-        "sellerId":false,
     }).exec()
 
     return returnItems.then((res)=>res)
