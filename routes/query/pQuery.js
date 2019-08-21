@@ -35,7 +35,7 @@ const mainList = async() => {
             "method":false,
             "place":false,
             "sellerId":false,
-        }).sort({updateDate:'desc'}).limit(10)
+        }).sort({updateDate:'desc'}).limit(6)
         .exec()
         return promise
     }
