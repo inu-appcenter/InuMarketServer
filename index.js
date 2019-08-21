@@ -7,6 +7,7 @@ const express = require('express'),
 
 const account = require('./routes/account')
 const product = require('./routes/product')
+const report = require('./routes/report')
 
 
 const app = express()
@@ -32,6 +33,7 @@ mongoose.connect('mongodb://localhost/newINUM')
 
 app.use('/account',account)
 app.use('/product',product)
+app.use('/report',report)
 app.use('/imgload',express.static('files'))
 app.use('/iosBanner',express.static('iosbanner'))
 app.use('/andBanner',express.static('andbanner'))

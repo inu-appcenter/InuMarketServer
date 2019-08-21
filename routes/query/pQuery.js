@@ -4,7 +4,6 @@ const upload = (query) =>{
     const moment = require('moment-timezone')
     
     const nowDate = moment.tz(new Date(),"Asia/Seoul").format('YYYY-MM-DD hh:mm:ss')
-    console.log(nowDate)
     let newProduct = new product()
     newProduct.productName = query.productName;
     newProduct.productState = query.productState;
