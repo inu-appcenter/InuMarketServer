@@ -1,7 +1,8 @@
 module.exports = function(io) {
-    io.on('connection', (socket) => {
+    const chat = io.of('/chat')
+    chat.on('connection', (socket) => {
         console.log(`${socket.id}`);
-        socket.on('disconnect', () => {
+        socket.on('disconnect', () => { 
             console.log('user disconnected');
             
         });
