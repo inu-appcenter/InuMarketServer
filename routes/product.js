@@ -19,20 +19,23 @@ const storage = multer.diskStorage({
         cb(null,basename+extension)
     }
 })
-const upload = multer({storage: storage})
+const upload = multer({
+    storage: storage
+})
 const authMiddleware = require('./function/auth')
 
 router.use('/',authMiddleware)
+router.use('/upload',upload.array('userFile',8))
 
 const sendSuccess = (res) => {
-    res.status(200).send("success")
+    res.status(200).json({ans:"success"})
 }
 
 const sendFail = (res) => {
-    res.status(400).send("fail")
+    res.status(400).json({ans:"fail"})
 }
 
-router.post('/upload',upload.array('userFile',8),async (req,res)=>{
+router.post('/upload',async (req,res)=>{
     const fileArray = []
     await req.files.map(Data => fileArray.push(Data.filename))
     const sendQuery = {
