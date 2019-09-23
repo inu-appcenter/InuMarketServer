@@ -5,19 +5,19 @@ const upload = (query) =>{
     
     const nowDate = moment.tz(new Date(),"Asia/Seoul").format('YYYY-MM-DD hh:mm:ss')
     let newProduct = new product()
-    newProduct.productName = query.productName;
-    newProduct.productState = query.productState;
+    newProduct.productName = deleteDoubleQuotes(query.productName);
+    newProduct.productState = deleteDoubleQuotes(query.productState);
     newProduct.productPrice = query.productPrice;
     newProduct.productStar = 0;
-    newProduct.category = query.category;
-    newProduct.productInfo = query.productInfo;
-    newProduct.method = query.method;
-    newProduct.place = query.place;
-    newProduct.sellerId = query.sellerId;
+    newProduct.category = deleteDoubleQuotes(query.category);
+    newProduct.productInfo = deleteDoubleQuotes(query.productInfo);
+    newProduct.method = deleteDoubleQuotes(query.method);
+    newProduct.place = deleteDoubleQuotes(query.place);
+    newProduct.sellerId = deleteDoubleQuotes(query.sellerId);
     newProduct.productSelled = false
     newProduct.updateDate = nowDate
-    newProduct.sellerName = query.sellerName
-    newProduct.sellerPhone = query.sellerPhone
+    newProduct.sellerName = deleteDoubleQuotes(query.sellerName)
+    newProduct.sellerPhone = deleteDoubleQuotes(query.sellerPhone)
     newProduct.productImg = query.productImg
     newProduct.fileFolder = query.fileFolder    
 
@@ -108,5 +108,10 @@ const selling = async(productId) => {
 const removeOne = async(productId) => {
     const deleteReturn = product.deleteOne({"productId":productId}).exec()
     return deleteReturn.then((res)=>res.n)
+}
+
+function deleteDoubleQuotes(str){
+    str = str.replace(/"/g,"");
+    return str
 }
 module.exports = {upload,mainList,oneItem,search,categorySearch,selling,removeOne,userItem,category}
