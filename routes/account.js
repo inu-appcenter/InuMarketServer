@@ -3,7 +3,7 @@ const router = express.Router()
 const request = require('request')
 const config = require('./config/config')
 const authMiddleWare = require('./function/auth')
-const saveFCM = require('./query/aQuery')
+// const saveFCM = require('./query/aQuery')
 let returnJson = {}
 let returnStatus
 
@@ -74,7 +74,7 @@ router.post('/signUp',(req,res)=>{
                     returnJson = {
                         token : response.body.token
                     }
-                    saveFCM.saveFCM(req.body.id,req.body.FCM)
+                    // saveFCM.saveFCM(req.body.id,req.body.FCM)
                     break
                 case 400:
                     returnStatus = 400
