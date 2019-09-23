@@ -3,6 +3,7 @@ const router = express.Router()
 const request = require('request')
 const config = require('./config/config')
 const authMiddleWare = require('./function/auth')
+const saveFCM = require('./query/aQuery')
 let returnJson = {}
 let returnStatus
 
@@ -73,6 +74,7 @@ router.post('/signUp',(req,res)=>{
                     returnJson = {
                         token : response.body.token
                     }
+                    saveFCM.saveFCM(req.body.id,req.body.FCM)
                     break
                 case 400:
                     returnStatus = 400
@@ -228,6 +230,20 @@ router.get('/myPage',async (req,res) => {
         tel : req.decoded.tel
     }
     res.status(200).json(decodedQuery)
+})
+
+router.get('/major',(req,res)=>{
+    const majorArray = ["건설환경공학부", "경영학부", "경제학과", "공연예술학과", "국어교육과", "국어국문학과", "글로벌물류학과", "기계공학과","도시건축학부", "도시공학과", "도시시설관리공학과","도시행정학과","독어독문학과", "디자인학부"
+    ,"러시아통상학과","메카트로닉스공학과", "무역학부", "문헌정보학과", "물리학과", "미국통상학과",
+    "바이오경영학과", "법학부", "불어불문학과",
+    "사회복지학과", "산업경영공학과", "생명공학부", "생명과학부", "세무회계학과", "소비자·아동학과", "수학과", "수학교육과", "신문방송학과", "신소재공학과"
+    ,"안전공학과", "에너지화학공학과", "역사교육과", "영어교육과", "영어영문학과", "운동건강과학부", "유아교육과", "영어교육과", "영어영문학과", "유아교육과", "윤리교육과", "융합시스템공학과", "일본통상학과", "일어교육과", "일어일문학과", "임베디드시스템공학과", "일본통상학과"
+    ,"전기공학과", "전자공학과", "정보전자공학과", "정보통신공학과", "정치외교학과", "조형예술학부", "중국통상학과", "중어중국학과"
+    ,"창의인재개발학과", "체육교육과", "체육학부"
+    ,"컴퓨터공학부"
+    ,"패션산업학과"
+    ,"해양학과", "행정학과", "화학과"]
+    res.json({major:majorArray})
 })
 
 
