@@ -75,7 +75,7 @@ router.post('/signUp',(req,res)=>{
                     returnJson = {
                         token : response.body.token
                     }
-                    saveFCM.saveFCM(req.body.id,req.body.FCM)
+                    // saveFCM.saveFCM(req.body.id,req.body.FCM)
                     break
                 case 400:
                     returnStatus = 400
