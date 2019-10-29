@@ -3,13 +3,14 @@ const router = express.Router()
 const request = require('request')
 const config = require('./config/config')
 const authMiddleWare = require('./function/auth')
-// const saveFCM = require('./query/aQuery')
+const saveFCM = require('./query/aQuery')
 let returnJson = {}
 let returnStatus
 
 router.use('/myPage',authMiddleWare)
 router.use('/changeTel',authMiddleWare)
 router.use('/changePassword',authMiddleWare)
+router.use('/getRoom',authMiddleWare)
 
 
 router.post('/signUp',(req,res)=>{
@@ -74,7 +75,7 @@ router.post('/signUp',(req,res)=>{
                     returnJson = {
                         token : response.body.token
                     }
-                    // saveFCM.saveFCM(req.body.id,req.body.FCM)
+                    saveFCM.saveFCM(req.body.id,req.body.FCM)
                     break
                 case 400:
                     returnStatus = 400
@@ -244,6 +245,10 @@ router.get('/major',(req,res)=>{
     ,"패션산업학과"
     ,"해양학과", "행정학과", "화학과"]
     res.json({major:majorArray})
+})
+
+router.get('/getRoom',async (req,res)=>{
+    res.status(200).send(await saveFCM.getRoom(req.decoded.id)) 
 })
 
 
